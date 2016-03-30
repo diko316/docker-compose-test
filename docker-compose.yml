@@ -1,0 +1,21 @@
+version: '2'
+
+services:
+  db:
+    image: postgres
+    ports:
+      - "5432:5432"
+    networks:
+      - api-net
+  api:
+    build: ./api
+    depends_on:
+      - db
+    links:
+      - db:database
+    networks:
+      - api-net
+      
+networks:
+  api-net:
+    driver: bridge
